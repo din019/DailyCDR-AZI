@@ -137,7 +137,7 @@ public class Database {
         Date date = new Date();
         date.getTime();
         try (Connection connection = dataSource.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             connection.setAutoCommit(false);
 
             preparedStatement.setInt(1, id);
@@ -222,11 +222,17 @@ public class Database {
 
     public static void fetchDailyCdrConfig(Map<String, CParseConf> configMap) {
         final String FETCH_CDR_CONFIG_QUERY =
-                "SELECT id, title, input_row_format, output_row_format, date_format, " +
-                        "prepaid_value, vendor_id, prepaid_vendor_id, read_folder, write_folder, " +
-                        "backup_folder, header_format, trailer_format, last_seq, error_folder " +
-                        "FROM BLNG.daily_cdr_config " +
-                        "WHERE our_company = 'TZ' AND sysdate BETWEEN effective_date_from AND NVL(effective_date_to, sysdate)";
+                """
+   SELECT id, title, input_row_format, output_row_format, date_format, 
+          prepaid_value, vendor_id, prepaid_vendor_id, read_folder, 
+          write_folder, backup_folder, header_format, trailer_format, 
+          last_seq, error_folder 
+   FROM BLNG.daily_cdr_config 
+   WHERE our_company = 'AZI' 
+     AND SYSDATE BETWEEN effective_date_from AND NVL(effective_date_to, SYSDATE) 
+     AND id = 3742 
+   ORDER BY last_seq DESC
+   """;
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FETCH_CDR_CONFIG_QUERY);
              ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -242,7 +248,7 @@ public class Database {
     }
 
     public static void fetchDailyCDRFileHistory(Map<Integer, CHistoryFile> cdrHistoryPerComp) {
-        final String FETCH_CDR_FILE_HISTORY = "SELECT * from BLNG.daily_cdr_file_history";
+        final String FETCH_CDR_FILE_HISTORY = "select * from BLNG.daily_cdr_file_history_azi";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FETCH_CDR_FILE_HISTORY);
              ResultSet resultSet = preparedStatement.executeQuery()) {

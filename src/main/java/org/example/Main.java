@@ -41,8 +41,8 @@ public class Main {
                 Message message = new MimeMessage(session);
                 message.setFrom(new InternetAddress(config.getMailFrom()));  // Sender email
                 message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(mailTo));  // Recipient email
-                message.setSubject("TZ mabal error");  // Subject of the email
-                message.setContent("התרחשה שגיאה בהרצת קבצים שלנו כמפעיל בנלאומי  <br /><br />" + "Error details here", "text/html");  // Body content (HTML)
+                message.setSubject("Azi mabal error");  // Subject of the email
+                message.setContent("התרחשה שגיאה בהרצת קבצי מפעילים בנלאומיים  <br /><br />" + "Error details here", "text/html");  // Body content (HTML)
 
                 // Send the email
                 Transport.send(message);
